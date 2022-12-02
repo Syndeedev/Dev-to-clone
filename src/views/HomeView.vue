@@ -1,13 +1,13 @@
 <template>
-  <div class="justify-center flex bg-yellow-300 items-center h-screen">
-    <div class="text-4xl">Hello 👋🏼</div>
-  </div>
+  <main-page-wrapper />
 </template>
 
 <script lang="ts">
+import MainPageWrapper from "@/components/homePage/MainPageWrapper.vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
+  components: { MainPageWrapper },
   name: "HomeView",
 });
 </script>
