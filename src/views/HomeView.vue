@@ -1,13 +1,13 @@
 <template>
-  <main-page-wrapper />
+  <main-page-layout />
 </template>
 
 <script lang="ts">
-import MainPageWrapper from "@/components/homePage/MainPageWrapper.vue";
+import MainPageLayout from "@/components/homePage/MainPageLayout.vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  components: { MainPageWrapper },
+  components: { MainPageLayout },
   name: "HomeView",
 });
 </script>

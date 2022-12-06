@@ -10,13 +10,11 @@
           src="https://res.cloudinary.com/practicaldev/image/fetch/s--Oxa0VXx6--/c_limit,f_auto,fl_progressive,q_auto,w_500/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ycp3929z3tep80zeau0g.png"
       /></a>
       <header
-        class="flex items-center justify-between py-3 px-4 border-b border-[#F5F5F5]"
+        class="flex items-center justify-between py-3 px-4 border-b border-gray-50"
       >
-        <!-- border-bottom: 1px solid var(--body-bg); -->
-
-        <h3 class="crayons-subtitle-2">
-          <a class="crayons-link" href="/t/atlashackathon22"
-            >MongoDB Atlas Hackathon 2022 (17)</a
+        <h3>
+          <a class="font-semibold text-xl" href="/t/atlashackathon22"
+            >MongoDB Atlas Hackathon 2022 (23)</a
           >
         </h3>
       </header>

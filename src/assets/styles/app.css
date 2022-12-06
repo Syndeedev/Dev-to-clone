@@ -4,8 +4,11 @@
 @tailwind utilities;
 
 .left_bar_link{
-	@apply flex hover:text-[#2F3AB2] hover:underline hover:bg-[#E1E3F3] rounded py-2 px-3
+	@apply flex hover:text-blue-700 hover:underline hover:bg-[#E1E3F3] rounded py-2 px-3
 }
 .right_sibebar_link{
-	@apply py-3 px-4 border-b border-[#F5F5F5] hover:bg-white hover:text-[#2F3AB2]
+	@apply py-3 px-4 border-b border-gray-50 hover:bg-white hover:text-blue-700
+}
+.article__hash_tag{
+	@apply p-2 text-sm border rounded-md border-transparent hover:border hover:border-gray-300 hover:bg-gray-100  hover:rounded-md hover:text-gray-800
 }

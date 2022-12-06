@@ -7,7 +7,7 @@
         </a>
 
         <div
-          class="flex-1 mx-2 border-2 p-2 rounded-md flex items-center hover:border-[#2F3AB2] hover:border-2"
+          class="flex-1 mx-2 border-2 p-2 rounded-md flex items-center hover:border-blue-700 hover:border-2"
         >
           <input
             type="text"
@@ -37,7 +37,7 @@
       <div class="flex items-center justify-center">
         <a
           href="#"
-          class="border ml-2 py-2 px-4 rounded-md border-[#2F3AB2] text-[#2F3AB2] hover:bg-[#2F3AB2] hover:text-white hover:underline"
+          class="border ml-2 py-2 px-4 rounded-md border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white hover:underline"
         >
           Create Post
         </a>
@@ -46,7 +46,7 @@
           src="@/assets/notification.svg"
           alt="notification icon"
         />
-        <img class="mx-1 text-[#2F3AB2]" src="@/assets/user_image.svg" alt="" />
+        <img class="mx-1 text-blue-700" src="@/assets/user_image.svg" alt="" />
       </div>
     </nav>
   </div>
