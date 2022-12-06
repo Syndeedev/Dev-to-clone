@@ -13,16 +13,41 @@ export default createStore({
     allArticles: (state, data) => {
       state.allArticles = state.allArticles.concat(data);
     },
+    allCommentsOfAnArticle: (state, data) => {
+      state.allArticles.map((article: any) => {
+        if (article.id == data.user_id) {
+          article.comments = data.comments;
+        }
+      });
+    },
   },
   actions: {
-    async getAllArticles({ commit }, page = 1) {
+    async getAllArticles({ commit, dispatch }, { page = 1, per_page = 10 }) {
       try {
-        const response = await axios.get(`${apiUrl}articles?page=${page}`);
-        console.log(response.data);
+        const response = await axios.get(
+          `${apiUrl}articles?per_page=${per_page}&page=${page}`
+        );
         commit("allArticles", response.data);
-        return true;
+        response.data.map((article: any) => {
+          dispatch("getAllCommentsOfAnArticle", article.id);
+        });
+        console.log(response.data);
+        return response.data;
       } catch (e) {
         return false;
+      }
+    },
+    async getAllCommentsOfAnArticle({ commit }, a_id) {
+      try {
+        const response = await axios.get(`${apiUrl}comments?a_id=${a_id}`);
+        const data = {
+          comments: response.data,
+          user_id: a_id,
+        };
+        commit("allCommentsOfAnArticle", data);
+        return response;
+      } catch (e) {
+        // return false;
       }
     },
   },
