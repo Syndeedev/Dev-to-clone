@@ -1,10 +1,10 @@
 <template>
   <div>
-    <section class="crayons-card crayons-card--secondary">
+    <section class="crayons-card crayons-card--secondary rounded-md">
       <a
         href="https://dev.to/devteam/announcing-the-mongodb-atlas-hackathon-2022-on-dev-2107"
         ><img
-          class="block w-100 h-auto radius-default"
+          class="block w-100 h-auto rounded-md"
           width="1000"
           height="420"
           src="https://res.cloudinary.com/practicaldev/image/fetch/s--Oxa0VXx6--/c_limit,f_auto,fl_progressive,q_auto,w_500/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ycp3929z3tep80zeau0g.png"

@@ -1,15 +1,15 @@
 <template>
-  <div>
+  <div :class="closeCard ? 'hidden' : 'flex'">
     <div
-      class="onboarding-task-card"
+      class="onboarding-task-card bg-blue-700 rounded-md p-9 mb-6 relative"
       role="dialog"
       aria-labelledby="task-card-title"
       aria-describedby="task-card-subtitle"
       style="display: block"
     >
       <button
-        class="close"
-        onclick="closeTaskCard()"
+        class="absolute top-6 right-6"
+        @click="closeTaskCard"
         aria-label="Close Welcome Message"
       >
         <svg
@@ -29,41 +29,28 @@
       <div>
         <img
           alt="onboarding task card image"
-          class="task-card-image"
+          class="task-card-image w-24 h-24"
           src="https://practicaldev-herokuapp-com.freetls.fastly.net/assets/devlogo-pwa-512.png"
           loading="lazy"
         />
       </div>
 
-      <h2 class="task-card-title" id="task-card-title">
+      <h2 class="text-4xl text-white font-extrabold my-2" id="task-card-title">
         You're now a part of the community!
       </h2>
-      <p id="task-card-subtitle" class="task-card-subtitle">
+      <p id="task-card-subtitle" class="text-sm text-white uppercase">
         SUGGESTED THINGS YOU CAN DO
       </p>
       <ul class="task-card-actions">
-        <li class="task-card-action">
-          <a class="task-card-link" href="/welcome">
-            <p><span class="emoji">😊</span>Join the Welcome thread</p>
-            <svg
-              width="8"
-              height="14"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M5.172 7L.222 2.05 1.636.636 8 7l-6.364 6.364L.222 11.95 5.172 7z"
-                fill="#fff"
-              ></path>
-            </svg>
-          </a>
-        </li>
-
-        <li class="task-card-action js-policy-article-create">
-          <a class="task-card-link" href="/new">
-            <p>
-              <span class="emoji">✍🏾</span>Write your first DEV Community 👩‍💻👨‍💻
-              post
+        <li
+          class="flex items-center p-5 mt-4 bg-white rounded-md bg-opacity-20 hover:bg-opacity-30"
+        >
+          <a
+            class="task-card-link w-full flex items-center justify-between"
+            href="/welcome"
+          >
+            <p class="text-base text-white font-bold">
+              <span class="emoji mr-2">😊</span>Join the Welcome thread
             </p>
             <svg
               width="8"
@@ -78,9 +65,41 @@
             </svg>
           </a>
         </li>
-        <li class="task-card-action">
-          <a class="task-card-link" href="/settings">
-            <p><span class="emoji">💅🏼</span>Customize your profile</p>
+
+        <li
+          class="flex items-center p-5 mt-4 bg-white rounded-md bg-opacity-20 hover:bg-opacity-30"
+        >
+          <a
+            class="task-card-link w-full flex items-center justify-between"
+            href="/new"
+          >
+            <p class="text-base text-white font-bold">
+              <span class="emoji mr-2">✍🏾</span>Write your first DEV Community
+              👩‍💻👨‍💻 post
+            </p>
+            <svg
+              width="8"
+              height="14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5.172 7L.222 2.05 1.636.636 8 7l-6.364 6.364L.222 11.95 5.172 7z"
+                fill="#fff"
+              ></path>
+            </svg>
+          </a>
+        </li>
+        <li
+          class="flex items-center p-5 mt-4 bg-white rounded-md bg-opacity-20 hover:bg-opacity-30"
+        >
+          <a
+            class="task-card-link w-full flex items-center justify-between"
+            href="/settings"
+          >
+            <p class="text-base text-white font-bold">
+              <span class="emoji mr-2">💅🏼</span>Customize your profile
+            </p>
             <svg
               width="8"
               height="14"
@@ -100,12 +119,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
-  //   setup() {
-  //     return {};
-  //   },
+  setup() {
+    const closeCard = ref(false);
+    const closeTaskCard = () => {
+      closeCard.value = !closeCard.value;
+    };
+    return { closeCard, closeTaskCard };
+  },
 });
 </script>
 
