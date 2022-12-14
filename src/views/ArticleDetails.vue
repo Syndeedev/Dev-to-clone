@@ -1,11 +1,15 @@
 <template>
-  <div class="mt-20 h-screen bg-gray-600">hello</div>
+  <div class="bg-gray-50 pt-16">
+    <article-details-layout />
+  </div>
 </template>
 
 <script lang="ts">
+import articleDetailsLayout from "@/components/articleDetails/articleDetailsLayout.vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
+  components: { articleDetailsLayout },
   setup() {
     return {};
   },

@@ -5,9 +5,11 @@ const apiUrl = process.env.API_URL || "https://dev.to/api/";
 export default createStore({
   state: {
     allArticles: [],
+    selectedArticle: {},
   },
   getters: {
     allArticles: (state) => state.allArticles,
+    selectedArticle: (state) => state.selectedArticle,
   },
   mutations: {
     allArticles: (state, data) => {
@@ -19,6 +21,9 @@ export default createStore({
           article.comments = data.comments;
         }
       });
+    },
+    selectedArticle: (state, data) => {
+      state.selectedArticle = data;
     },
   },
   actions: {
@@ -48,6 +53,19 @@ export default createStore({
         return response;
       } catch (e) {
         // return false;
+      }
+    },
+    async getArticleById({ commit }, { username, slug }) {
+      try {
+        const response = await axios.get(
+          `${apiUrl}articles/${username}/${slug}`
+        );
+        commit("selectedArticle", response.data);
+
+        console.log(response.data);
+        return response.data;
+      } catch (e) {
+        return false;
       }
     },
   },

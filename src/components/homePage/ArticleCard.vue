@@ -195,7 +195,7 @@
       <div class="article__comments__actions">
         <a
           class="article__comments-btn rounded-md text-gray-600 text-sm p-3 hover:bg-gray-100"
-          :href="`/articles/${article.user.username}/${article.slug}#comments-container`"
+          :href="`/${article.user.username}/${article.slug}#comments-container`"
           data-testid="see-all-comments"
           >See all {{ article.comments_count }} comments</a
         >
