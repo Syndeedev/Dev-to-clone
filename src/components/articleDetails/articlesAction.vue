@@ -41,9 +41,9 @@
               ></path>
             </svg>
           </span> -->
-          <span class="crayons-reaction__count" id="reaction-number-like"
-            >8</span
-          >
+          <span class="crayons-reaction__count" id="reaction-number-like">{{
+            selectedArticle.positive_reactions_count
+          }}</span>
 
           <!-- <span data-testid="tooltip" class="crayons-tooltip__content">
             Like
@@ -72,9 +72,9 @@
               ></path>
             </svg>
           </span>
-          <span class="crayons-reaction__count" id="reaction-number-comment"
-            >4</span
-          >
+          <span class="crayons-reaction__count" id="reaction-number-comment">{{
+            selectedArticle.comments_count
+          }}</span>
 
           <!-- <span data-testid="tooltip" class="crayons-tooltip__content">
             Jump to Comments
@@ -276,9 +276,13 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+import { computed } from "vue";
+import { useStore } from "vuex";
 
 export default defineComponent({
   setup() {
+    const store = useStore();
+    const selectedArticle = computed(() => store.getters.selectedArticle);
     const showdropdown = ref(false);
     const showMoreDropdown = () => {
       showdropdown.value = !showdropdown.value;
@@ -286,6 +290,7 @@ export default defineComponent({
     return {
       showdropdown,
       showMoreDropdown,
+      selectedArticle,
     };
   },
 });

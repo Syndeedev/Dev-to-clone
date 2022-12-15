@@ -6,7 +6,7 @@
       <div class="sidebar-wrapper-left hidden md:block">
         <articles-action />
       </div>
-      <main class="main-content col-span-1 md:col-span-6">
+      <main class="main-content col-span-1 md:col-span-3 lg:col-span-6">
         <selected-article />
       </main>
       <div class="sidebar-wrapper-right hidden lg:block lg:col-span-2">

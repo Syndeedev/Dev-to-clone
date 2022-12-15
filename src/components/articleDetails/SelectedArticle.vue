@@ -59,21 +59,39 @@
         v-html="selectedArticle.body_html"
       ></div>
     </div>
-    <div></div>
+    <div class="px-16 pt-8">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl text-[#242424] font-bold">Top Comments (3)</h2>
+        <button class="px-4 py-2 border-2">Subscribe</button>
+      </div>
+      <div>
+        <QuillEditor theme="snow" placeholder="Add to the discussion" />
+        <div class="mb-6 mt-3">
+          <button class="px-4 py-2 mx-2 bg-[#EBECFC] rounded-lg">Submit</button>
+          <button class="px-4 py-2 mx-2 bg-gray-100 rounded-lg">Preview</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { QuillEditor } from "@vueup/vue-quill";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
 // import ArticleCard from "./ArticleCard.vue";
 // import OnboardingTaskCard from "./OnboardingTaskCard.vue";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
 export default defineComponent({
+  components: {
+    QuillEditor,
+  },
   setup() {
     const store = useStore();
+    const content = ref("");
     const selectedArticle = computed(() => store.getters.selectedArticle);
-    return { selectedArticle };
+    return { selectedArticle, content };
   },
 });
 </script>
