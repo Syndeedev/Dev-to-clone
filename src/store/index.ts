@@ -7,11 +7,13 @@ export default createStore({
     allArticles: [],
     selectedArticle: {},
     authorDetails: {},
+    selectedArticleComments: [],
   },
   getters: {
     allArticles: (state) => state.allArticles,
     selectedArticle: (state) => state.selectedArticle,
     authorDetails: (state) => state.authorDetails,
+    selectedArticleComments: (state) => state.selectedArticleComments,
   },
   mutations: {
     allArticles: (state, data) => {
@@ -29,6 +31,9 @@ export default createStore({
     },
     authorDetails: (state, data) => {
       state.authorDetails = data;
+    },
+    selectedArticleComments: (state, data) => {
+      state.selectedArticleComments = data;
     },
   },
   actions: {
@@ -71,8 +76,14 @@ export default createStore({
         const authorDetails = await axios.get(
           `${apiUrl}users/${response.data.user.user_id}`
         );
+
+        const selectedArticleComments = await axios.get(
+          `${apiUrl}comments?a_id=${response.data.id}`
+        );
         commit("authorDetails", authorDetails.data);
+        commit("selectedArticleComments", selectedArticleComments.data);
         console.log(authorDetails.data);
+        console.log(selectedArticleComments.data);
         return response.data;
       } catch (e) {
         return false;

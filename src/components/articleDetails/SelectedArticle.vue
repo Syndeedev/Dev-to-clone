@@ -56,9 +56,11 @@
         v-html="selectedArticle.body_html"
       ></div>
     </div>
-    <div class="px-16 pt-8">
+    <div v-if="selectedArticleComments" class="px-16 pt-8 all_comments">
       <div class="flex items-center justify-between mb-6">
-        <h2 class="text-2xl text-[#242424] font-bold">Top Comments (3)</h2>
+        <h2 class="text-2xl text-[#242424] font-bold">
+          Top Comments ({{ selectedArticleComments.length }})
+        </h2>
         <button class="px-4 py-2 border-2">Subscribe</button>
       </div>
       <div>
@@ -66,6 +68,68 @@
         <div class="mb-6 mt-3">
           <button class="px-4 py-2 mx-2 bg-[#EBECFC] rounded-lg">Submit</button>
           <button class="px-4 py-2 mx-2 bg-gray-100 rounded-lg">Preview</button>
+        </div>
+      </div>
+      <div v-for="(comment, index) in selectedArticleComments" :key="index">
+        <div>
+          <div class="flex">
+            <a :href="`/${comment.user?.username}`"
+              ><img
+                :src="comment.user?.profile_image"
+                alt="author pic "
+                class="rounded-full w-10 h-10 mr-2 border border-gray-400"
+                loading="lazy"
+            /></a>
+            <div
+              class="bg-white border border-gray-300 mb-6 p-3 rounded-lg w-full"
+            >
+              <div class="flex items-center">
+                <span class="text-sm font-semibold">
+                  {{ comment.user?.name }}
+                </span>
+                <div class="mx-2 w-[2px] h-[2px] bg-black rounded-full">.</div>
+                <a
+                  :href="`/${comment.user.username}/comments/${comment.id_code}`"
+                  class="text-gray-700 text-sm"
+                  ><time>{{ date(comment.created_at) }}</time>
+                </a>
+              </div>
+
+              <div class="py-2 ml-2" v-html="comment.body_html"></div>
+            </div>
+          </div>
+          <div v-if="comment.children.length">
+            <div v-for="(subComment, index) in comment.children" :key="index">
+              <div class="flex ml-7">
+                <a :href="`/${subComment.user?.username}`"
+                  ><img
+                    :src="subComment.user?.profile_image"
+                    alt="author pic "
+                    class="rounded-full w-10 h-10 mr-2 border border-gray-400"
+                    loading="lazy"
+                /></a>
+                <div
+                  class="bg-white border border-gray-300 mb-6 p-3 rounded-lg w-full"
+                >
+                  <div class="flex items-center">
+                    <span class="text-sm font-semibold">
+                      {{ subComment.user?.name }}
+                    </span>
+                    <div class="mx-2 w-[2px] h-[2px] bg-black rounded-full">
+                      .
+                    </div>
+                    <a
+                      :href="`/${subComment.user.username}/comments/${subComment.id_code}`"
+                      class="text-gray-700 text-sm"
+                      ><time>{{ date(subComment.created_at) }}</time>
+                    </a>
+                  </div>
+
+                  <div class="py-2 ml-2" v-html="subComment.body_html"></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -76,6 +140,8 @@
 import { defineComponent } from "vue";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
+
+import moment from "moment";
 // import ArticleCard from "./ArticleCard.vue";
 // import OnboardingTaskCard from "./OnboardingTaskCard.vue";
 import { computed, ref } from "vue";
@@ -88,7 +154,13 @@ export default defineComponent({
     const store = useStore();
     const content = ref("");
     const selectedArticle = computed(() => store.getters.selectedArticle);
-    return { selectedArticle, content };
+    const selectedArticleComments = computed(
+      () => store.getters.selectedArticleComments
+    );
+    const date = (value: string) => {
+      return moment(value).fromNow();
+    };
+    return { selectedArticle, selectedArticleComments, content, date };
   },
 });
 </script>

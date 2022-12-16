@@ -17,9 +17,10 @@
                 loading="lazy"
               />
             </span>
-            <span class="crayons-link crayons-subtitle-2 mt-5">{{
-              authorDetails?.name
-            }}</span>
+            <span
+              class="crayons-link crayons-subtitle-2 mt-5 text-xl font-semibold"
+              >{{ authorDetails?.name }}</span
+            >
           </a>
         </div>
 
