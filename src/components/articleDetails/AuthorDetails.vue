@@ -8,22 +8,22 @@
         class="crayons-card crayons-card--secondary branded-7 border-t-[#280331] border-t-[32px] p-4 rounded-lg"
       >
         <div class="-mt-8">
-          <a href="/codepo8" class="flex">
+          <a :href="`/${authorDetails?.username}`" class="flex">
             <span class="crayons-avatar crayons-avatar--xl mr-2 shrink-0">
               <img
-                src="https://res.cloudinary.com/practicaldev/image/fetch/s--6g52Nrx9--/c_fill,f_auto,fl_progressive,h_90,q_auto,w_90/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/110884/c4807448-b7fe-4d8d-ba13-a3ec4c97b377.jpeg"
+                :src="authorDetails?.profile_image"
                 class="crayons-avatar__image rounded-full w-12 h-12"
                 alt=""
                 loading="lazy"
               />
             </span>
-            <span class="crayons-link crayons-subtitle-2 mt-5"
-              >Christian Heilmann</span
-            >
+            <span class="crayons-link crayons-subtitle-2 mt-5">{{
+              authorDetails?.name
+            }}</span>
           </a>
         </div>
 
-        <div class="print-hidden mt-4">
+        <div class="print-hidden my-4">
           <button
             name="button"
             type="button"
@@ -36,33 +36,43 @@
             Follow
           </button>
         </div>
-        <div class="color-base-70">
-          Open Web guy at Microsoft and long-time JavaScript user
+        <div class="color-base-70 mb-4 text-[#575757]">
+          {{ authorDetails?.summary }}
         </div>
 
         <div class="user-metadata-details">
           <ul class="user-metadata-details-inner">
-            <li>
-              <div class="key">Location</div>
-              <div class="value">Berlin, Germany</div>
+            <li v-if="authorDetails.location" class="mb-3">
+              <div class="key text-gray-700 text-xs uppercase font-semibold">
+                Location
+              </div>
+              <div class="value text-gray-800">
+                {{ authorDetails.location }}
+              </div>
             </li>
-            <li>
-              <div class="key">Work</div>
-              <div class="value">Principal Program Manager at Microsoft</div>
+            <li v-if="authorDetails.work" class="mb-3">
+              <div class="key text-gray-700 text-xs uppercase font-semibold">
+                Work
+              </div>
+              <div class="value text-gray-800">
+                Principal Program Manager at Microsoft
+              </div>
             </li>
-            <li>
-              <div class="key">Joined</div>
-              <div class="value">
-                <time datetime="2018-10-29T16:23:00Z" class="date"
-                  >Oct 29, 2018</time
-                >
+            <li v-if="authorDetails.joined_at" class="mb-3">
+              <div class="key text-gray-700 text-xs uppercase font-semibold">
+                Joined
+              </div>
+              <div class="value text-gray-800">
+                <time datetime="2018-10-29T16:23:00Z" class="date">{{
+                  authorDetails.joined_at
+                }}</time>
               </div>
             </li>
           </ul>
         </div>
       </div>
 
-      <div class="crayons-card crayons-card--secondary">
+      <!-- <div class="crayons-card crayons-card--secondary">
         <header class="crayons-card__header">
           <h3 class="crayons-subtitle-2">
             More from <a href="/codepo8">Christian Heilmann</a>
@@ -111,17 +121,21 @@
             </div>
           </a>
         </div>
-      </div>
+      </div> -->
     </div>
   </aside>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { computed } from "vue";
+import { useStore } from "vuex";
 
 export default defineComponent({
   setup() {
-    return {};
+    const store = useStore();
+    const authorDetails = computed(() => store.getters.authorDetails);
+    return { authorDetails };
   },
 });
 </script>

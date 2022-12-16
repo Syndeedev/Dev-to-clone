@@ -6,10 +6,12 @@ export default createStore({
   state: {
     allArticles: [],
     selectedArticle: {},
+    authorDetails: {},
   },
   getters: {
     allArticles: (state) => state.allArticles,
     selectedArticle: (state) => state.selectedArticle,
+    authorDetails: (state) => state.authorDetails,
   },
   mutations: {
     allArticles: (state, data) => {
@@ -24,6 +26,9 @@ export default createStore({
     },
     selectedArticle: (state, data) => {
       state.selectedArticle = data;
+    },
+    authorDetails: (state, data) => {
+      state.authorDetails = data;
     },
   },
   actions: {
@@ -63,6 +68,11 @@ export default createStore({
         commit("selectedArticle", response.data);
 
         console.log(response.data);
+        const authorDetails = await axios.get(
+          `${apiUrl}users/${response.data.user.user_id}`
+        );
+        commit("authorDetails", authorDetails.data);
+        console.log(authorDetails.data);
         return response.data;
       } catch (e) {
         return false;

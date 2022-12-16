@@ -1,7 +1,8 @@
 <template>
-  <div class="bg-white border border-gray-300 cursor-pointer mb-2 rounded-lg">
+  <div class="bg-white border border-gray-300 mb-2 rounded-lg">
     <div>
       <img
+        v-if="selectedArticle.cover_image"
         :src="selectedArticle.cover_image"
         :alt="selectedArticle.title"
         class="rounded-tr-lg rounded-tl-lg"
@@ -33,14 +34,10 @@
           </div>
         </div>
 
-        <h3 class="article__title mt-6">
-          <a
-            :href="`/${selectedArticle?.user?.username}/${selectedArticle.slug}`"
-            id="article-link-1281303"
-            ><span class="text-3xl font-semibold hover:text-blue-700">{{
-              selectedArticle.title
-            }}</span>
-          </a>
+        <h3
+          class="article__title mt-6 text-5xl text-black font-bold leading-[3.5rem]"
+        >
+          {{ selectedArticle.title }}
         </h3>
         <div class="my-2 flex items-center">
           <a
