@@ -58,9 +58,121 @@
     </div>
     <div v-if="selectedArticleComments" class="px-16 pt-8 all_comments">
       <div class="flex items-center justify-between mb-6">
-        <h2 class="text-2xl text-[#242424] font-bold">
-          Top Comments ({{ selectedArticleComments.length }})
-        </h2>
+        <div class="flex items-center gap-3">
+          <h2 class="text-2xl text-[#242424] font-bold">
+            Top Comments ({{ selectedArticleComments.length }})
+          </h2>
+          <div class="relative">
+            <button
+              class="c-btn c-btn--ghost crayons-btn--icon-left"
+              id="toggle-comments-sort-dropdown"
+              aria-controls="comments-sort-dropdown-container"
+              aria-expanded="true"
+              aria-label="Sort comments"
+              aria-haspopup="true"
+              data-initialized="true"
+              @click="showMoreDropdown"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                class="mt-2"
+              >
+                <title>Crown</title>
+                <path
+                  d="M12 18l-4-3.771 1-.943 3 2.829 3-2.829 1 .943L12 18zm0-10.115l-3 2.829-1-.943L12 6l4 3.771-1 .942-3-2.828z"
+                ></path>
+              </svg>
+            </button>
+
+            <nav
+              v-if="showdropdown"
+              class="crayons-dropdown absolute w-80 bg-white p-3 side-bar border border-gray-300 rounded-lg"
+              id="comments-sort-dropdown-container"
+              aria-labelledby="comments-sort-title"
+              style="display: block"
+            >
+              <h3 id="comments-sort-title" class="mb-3 font-bold text-lg">
+                Sort discussion:
+              </h3>
+              <ul class="comments-sort-dropdown__list">
+                <li class="comment-sort-option">
+                  <a
+                    href="/missamarakay/how-are-you-preparing-for-the-new-year-248a?comments_sort=top#toggle-comments-sort-dropdown"
+                    class="comment-sort-option__header pl-7 pb-0 crayons-link--block block"
+                    aria-describedby="top-description-text"
+                    aria-current="page"
+                  >
+                    <div>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        role="img"
+                        aria-labelledby="agamfzbafd46qmk78oj6k7l5d3gxle0a"
+                        aria-hidden="true"
+                        class="crayons-icon"
+                      >
+                        <title id="agamfzbafd46qmk78oj6k7l5d3gxle0a">
+                          Selected Sort Option
+                        </title>
+                        <path
+                          d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414 4.95 4.95z"
+                        ></path>
+                      </svg>
+
+                      Top
+                    </div>
+                    <div
+                      id="top-description-text"
+                      class="crayons-field__description"
+                    >
+                      Most upvoted and relevant comments will be first
+                    </div>
+                  </a>
+                </li>
+
+                <li class="comment-sort-option">
+                  <a
+                    href="/missamarakay/how-are-you-preparing-for-the-new-year-248a?comments_sort=latest#toggle-comments-sort-dropdown"
+                    class="comment-sort-option__header pl-7 pb-0 crayons-link--block block"
+                    aria-describedby="latest-description-text"
+                  >
+                    <div>Latest</div>
+                    <div
+                      id="latest-description-text"
+                      class="crayons-field__description"
+                    >
+                      Most recent comments will be first
+                    </div>
+                  </a>
+                </li>
+
+                <li class="comment-sort-option">
+                  <a
+                    href="/missamarakay/how-are-you-preparing-for-the-new-year-248a?comments_sort=oldest#toggle-comments-sort-dropdown"
+                    class="comment-sort-option__header pl-7 pb-0 crayons-link--block block"
+                    aria-describedby="oldest-description-text"
+                  >
+                    <div>Oldest</div>
+                    <div
+                      id="oldest-description-text"
+                      class="crayons-field__description"
+                    >
+                      The oldest comments will be first
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+
         <button class="px-4 py-2 border-2">Subscribe</button>
       </div>
       <div>
@@ -159,7 +271,18 @@ export default defineComponent({
     const date = (value: string) => {
       return moment(value).fromNow();
     };
-    return { selectedArticle, selectedArticleComments, content, date };
+    const showdropdown = ref(false);
+    const showMoreDropdown = () => {
+      showdropdown.value = !showdropdown.value;
+    };
+    return {
+      selectedArticle,
+      selectedArticleComments,
+      showMoreDropdown,
+      showdropdown,
+      content,
+      date,
+    };
   },
 });
 </script>

@@ -131,7 +131,7 @@
           id="mod-actions-menu-btn-area"
           class="print-hidden hidden align-center"
         ></div>
-        <div class="align-center m:relative">
+        <div class="align-center relative">
           <button
             id="article-show-more-button"
             aria-controls="article-show-more-dropdown"
@@ -162,16 +162,20 @@
 
           <div
             v-if="showdropdown"
-            id="article-show-more-dropdown"
-            class="crayons-dropdown side-bar left-2 right-2 m:right-auto m:left-100 s:left-auto mb-1 m:mb-0 top-unset bottom-100 m:top-0 m:bottom-unset"
+            id="article-show-more-dropdown w-full"
+            class="crayons-dropdown w-64 bg-white p-6 side-bar absolute border border-gray-300 rounded-lg"
           >
             <div>
               <button
                 id="copy-post-url-button"
-                class="flex justify-between crayons-link crayons-link--block w-100 bg-transparent border-0"
+                class="flex justify-between w-full group mb-3"
                 data-posturl="https://dev.to/codepo8/code-brushes-for-github-copilot-4hij"
+                @click="copyUrl"
               >
-                <span class="fw-bold">Copy link</span>
+                <span
+                  class="fw-bold font-bold text-gray-800 group-hover:text-blue-700"
+                  >Copy link</span
+                >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -181,7 +185,7 @@
                   role="img"
                   aria-labelledby="an2nwnsbgdootgdggvgaga9lmm1ko3dq"
                   aria-hidden="true"
-                  class="crayons-icon mx-2 shrink-0"
+                  class="crayons-icon mx-2 shrink-0 group-hover:bg-[#EBECFC] group-hover:p-px group-hover:rounded-lg"
                 >
                   <title id="an2nwnsbgdootgdggvgaga9lmm1ko3dq">Copy link</title>
                   <path
@@ -190,15 +194,16 @@
                 </svg>
               </button>
               <div
+                v-if="copy"
                 id="article-copy-link-announcer"
                 aria-live="polite"
-                class="crayons-notice crayons-notice--success my-2 p-1"
+                class="bg-[#EAF4F0] text-gray-900 rounded-lg text-center crayons-notice--success my-2 p-1"
               >
                 Copied to Clipboard
               </div>
             </div>
 
-            <div class="Desktop-only">
+            <div class="Desktop-only flex flex-col justify-center">
               <a
                 target="_blank"
                 class="crayons-link crayons-link--block"
@@ -263,10 +268,13 @@
                 >Share Post via...</a
               >
             </template>
-
-            <a href="/report-abuse" class="crayons-link crayons-link--block"
-              >Report Abuse</a
-            >
+            <div class="w-full">
+              <a
+                href="/report-abuse"
+                class="crayons-link crayons-link--block p-2 w-full hover:bg-[#ebecfc] hover:rounded-lg hover:text-[#2f3ab1]"
+                >Report Abuse</a
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -284,10 +292,16 @@ export default defineComponent({
     const store = useStore();
     const selectedArticle = computed(() => store.getters.selectedArticle);
     const showdropdown = ref(false);
+    const copy = ref(false);
     const showMoreDropdown = () => {
       showdropdown.value = !showdropdown.value;
     };
+    const copyUrl = () => {
+      copy.value = !copy.value;
+    };
     return {
+      copy,
+      copyUrl,
       showdropdown,
       showMoreDropdown,
       selectedArticle,
@@ -295,5 +309,13 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped></style>
+<style lang="scss" scoped>
+.Desktop-only a {
+  padding: 8px;
+}
+.Desktop-only a:hover {
+  background: #ebecfc;
+  color: #2f3ab1;
+  border-radius: 8px;
+}
+</style>
