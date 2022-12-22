@@ -29,13 +29,13 @@
 
       <div class="pl-10">
         <h3 class="article__title">
-          <a
-            :href="`/${article.user.username}/${article.slug}`"
+          <router-link
+            :to="`/${article.user.username}/${article.slug}`"
             id="article-link-1281303"
             ><span class="text-3xl font-semibold hover:text-blue-700">{{
               article.title
             }}</span>
-          </a>
+          </router-link>
         </h3>
         <div class="my-2 flex items-center">
           <a

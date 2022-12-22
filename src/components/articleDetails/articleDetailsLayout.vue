@@ -1,15 +1,15 @@
 <template>
   <div class="w-full">
     <div
-      class="m-auto max-w-7xl grid gap-5 grid-cols-1 md:grid-cols-4 lg:grid-cols-9 p-4"
+      class="m-auto max-w-7xl grid gap-5 grid-cols-1 md:grid-cols-4 lg:grid-cols-12 p-4"
     >
       <div class="sidebar-wrapper-left hidden md:block">
         <articles-action />
       </div>
-      <main class="main-content col-span-1 md:col-span-3 lg:col-span-6">
+      <main class="main-content col-span-1 md:col-span-3 lg:col-span-8">
         <selected-article />
       </main>
-      <div class="sidebar-wrapper-right hidden lg:block lg:col-span-2">
+      <div class="sidebar-wrapper-right hidden lg:block lg:col-span-3">
         <author-details />
       </div>
     </div>
@@ -38,6 +38,11 @@ export default defineComponent({
       store.dispatch("getArticleById", { username, slug });
     };
     getArticleById();
+
+    const getAllAuthorArticles = () => {
+      store.dispatch("getAllAuthorArticles", username);
+    };
+    getAllAuthorArticles();
     return {
       getArticleById,
     };

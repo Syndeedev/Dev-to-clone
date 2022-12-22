@@ -1,6 +1,8 @@
 <template>
   <aside class="crayons-layout__sidebar-right" aria-label="Author details">
+    <card-loader v-if="!Object.keys(authorDetails).length" />
     <div
+      v-else
       class="crayons-article-sticky grid gap-4 break-word"
       id="article-show-primary-sticky-nav"
     >
@@ -73,56 +75,34 @@
         </div>
       </div>
 
-      <!-- <div class="crayons-card crayons-card--secondary">
-        <header class="crayons-card__header">
-          <h3 class="crayons-subtitle-2">
-            More from <a href="/codepo8">Christian Heilmann</a>
-          </h3>
+      <div class="crayons-card crayons-card--secondary pt-4">
+        <header class="crayons-card__header px-4 pb-4">
+          <h4 class="font-semibold text-xl">
+            More from
+            <a class="text-blue-700" :href="`/${authorDetails?.username}`">{{
+              authorDetails?.name
+            }}</a>
+          </h4>
         </header>
-        <div>
-          <a
-            class="crayons-link crayons-link--contentful"
-            href="/codepo8/ai-code-completion-is-like-cruise-control-and-thats-great-news-for-bigger-teams-29mn"
-          >
-            AI Code completion is like cruise control - and that's great news
-            for bigger teams
-            <div class="crayons-link__secondary -ml-1">
-              <span class="mr-1"><span class="opacity-50">#</span>ai</span>
-              <span class="mr-1"
-                ><span class="opacity-50">#</span>machinlearning</span
+        <div
+          v-for="item in authorArticles"
+          :key="item.id"
+          class="py-3 hover:bg-white px-4 border-t hover:rounded-bl-lg hover:rounded-br-lg"
+        >
+          <a :href="`/${item.user.username}/${item.slug}`">
+            <h4>{{ item.title }}</h4>
+            <div class="my-2 flex items-center">
+              <p
+                v-for="tag in item.tag_list"
+                :key="tag"
+                class="px-2 text-sm text-[#717171]"
               >
-              <span class="mr-1"
-                ><span class="opacity-50">#</span>codecompletion</span
-              >
-              <span class="mr-1"><span class="opacity-50">#</span>copilot</span>
-            </div>
-          </a>
-          <a
-            class="crayons-link crayons-link--contentful"
-            href="/codepo8/quick-tip-embedding-youtube-videos-in-github-pages-4e36"
-          >
-            Quick tip: embedding YouTube Videos in GitHub pages
-            <div class="crayons-link__secondary -ml-1">
-              <span class="mr-1"><span class="opacity-50">#</span>github</span>
-              <span class="mr-1"><span class="opacity-50">#</span>youtube</span>
-            </div>
-          </a>
-          <a
-            class="crayons-link crayons-link--contentful"
-            href="/codepo8/github-copilot-explaining-code-and-translating-it-from-one-language-to-another-3i6e"
-          >
-            GitHub Copilot explaining code and translating it from one language
-            to another
-            <div class="crayons-link__secondary -ml-1">
-              <span class="mr-1"><span class="opacity-50">#</span>github</span>
-              <span class="mr-1"><span class="opacity-50">#</span>copilot</span>
-              <span class="mr-1"
-                ><span class="opacity-50">#</span>machinelearning</span
-              >
+                <span>#</span>{{ tag }}
+              </p>
             </div>
           </a>
         </div>
-      </div> -->
+      </div>
     </div>
   </aside>
 </template>
@@ -131,12 +111,16 @@
 import { defineComponent } from "vue";
 import { computed } from "vue";
 import { useStore } from "vuex";
+import cardLoader from "./cardLoader.vue";
 
 export default defineComponent({
+  components: { cardLoader },
   setup() {
     const store = useStore();
+
     const authorDetails = computed(() => store.getters.authorDetails);
-    return { authorDetails };
+    const authorArticles = computed(() => store.getters.authorArticles);
+    return { authorDetails, authorArticles };
   },
 });
 </script>

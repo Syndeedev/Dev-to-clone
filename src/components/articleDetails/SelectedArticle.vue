@@ -35,7 +35,7 @@
         </div>
 
         <h3
-          class="article__title mt-6 text-5xl text-black font-bold leading-[3.5rem]"
+          class="article__title mt-6 text-5xl text-black font-extrabold max-w-2xl leading-[3.5rem]"
         >
           {{ selectedArticle.title }}
         </h3>
@@ -56,7 +56,7 @@
         v-html="selectedArticle.body_html"
       ></div>
     </div>
-    <div v-if="selectedArticleComments" class="px-16 pt-8 all_comments">
+    <div v-if="selectedArticleComments" class="px-16 py-8 all_comments">
       <div class="flex items-center justify-between mb-6">
         <div class="flex items-center gap-3">
           <h2 class="text-2xl text-[#242424] font-bold">
@@ -90,7 +90,7 @@
 
             <nav
               v-if="showdropdown"
-              class="crayons-dropdown absolute w-80 bg-white p-3 side-bar border border-gray-300 rounded-lg"
+              class="crayons-dropdown z-10 top-12 left-[-230px] absolute w-80 bg-white p-3 side-bar border border-gray-300 rounded-lg"
               id="comments-sort-dropdown-container"
               aria-labelledby="comments-sort-title"
               style="display: block"
@@ -101,32 +101,32 @@
               <ul class="comments-sort-dropdown__list">
                 <li class="comment-sort-option">
                   <a
-                    href="/missamarakay/how-are-you-preparing-for-the-new-year-248a?comments_sort=top#toggle-comments-sort-dropdown"
+                    href="#"
                     class="comment-sort-option__header pl-7 pb-0 crayons-link--block block"
                     aria-describedby="top-description-text"
                     aria-current="page"
                   >
-                    <div>
-                      <svg
+                    <div class="flex items-center">
+                      <!-- <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
                         height="24"
                         viewBox="0 0 24 24"
                         fill="none"
                         role="img"
-                        aria-labelledby="agamfzbafd46qmk78oj6k7l5d3gxle0a"
+                        aria-labelledby="a7urjp157zhid3sirkpovdsyc67l6tn8"
                         aria-hidden="true"
                         class="crayons-icon"
                       >
-                        <title id="agamfzbafd46qmk78oj6k7l5d3gxle0a">
+                        <title id="a7urjp157zhid3sirkpovdsyc67l6tn8">
                           Selected Sort Option
                         </title>
                         <path
                           d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414 4.95 4.95z"
                         ></path>
-                      </svg>
+                      </svg> -->
 
-                      Top
+                      <h4>Top</h4>
                     </div>
                     <div
                       id="top-description-text"
@@ -139,11 +139,11 @@
 
                 <li class="comment-sort-option">
                   <a
-                    href="/missamarakay/how-are-you-preparing-for-the-new-year-248a?comments_sort=latest#toggle-comments-sort-dropdown"
+                    href="#"
                     class="comment-sort-option__header pl-7 pb-0 crayons-link--block block"
                     aria-describedby="latest-description-text"
                   >
-                    <div>Latest</div>
+                    <h4>Latest</h4>
                     <div
                       id="latest-description-text"
                       class="crayons-field__description"
@@ -155,11 +155,11 @@
 
                 <li class="comment-sort-option">
                   <a
-                    href="/missamarakay/how-are-you-preparing-for-the-new-year-248a?comments_sort=oldest#toggle-comments-sort-dropdown"
+                    href="#"
                     class="comment-sort-option__header pl-7 pb-0 crayons-link--block block"
                     aria-describedby="oldest-description-text"
                   >
-                    <div>Oldest</div>
+                    <h4>Oldest</h4>
                     <div
                       id="oldest-description-text"
                       class="crayons-field__description"
@@ -244,6 +244,53 @@
           </div>
         </div>
       </div>
+      <div class="text-sm text-[#717171] text-center py-4">
+        <span>Code of Conduct </span>
+        <span class="mx-2">•</span>
+        <span> Report abuse </span>
+      </div>
+    </div>
+  </div>
+  <!-- READ NEXT -->
+  <div class="bg-white border border-gray-300 mb-2 pb-8 rounded-lg">
+    <div class="mb-3 px-16 pt-8">
+      <h4 class="font-semibold text-2xl">Read next</h4>
+      <div
+        class="pt-6 group"
+        v-for="item in allPostsExceptSelected"
+        :key="item.id"
+      >
+        <a :href="`/${item.user?.username}/${item.slug}`">
+          <div class="article__top">
+            <div class="flex items-center">
+              <div class="article__author-pic">
+                <img
+                  :src="item.user?.profile_image"
+                  alt="author pic "
+                  class="rounded-full w-16 h-16 mr-2 border border-gray-400"
+                  loading="lazy"
+                />
+              </div>
+              <div class="flex flex-col ml-2">
+                <span class="text-xl font-semibold group-hover:text-blue-700">
+                  {{ item.title }}
+                </span>
+                <div
+                  class="text-base pt-1 text-gray-500 group-hover:text-blue-700"
+                >
+                  <span>
+                    {{ item.user?.name }}
+                  </span>
+                  <span class="group-hover:text-blue-700">
+                    -
+                    <time>{{ item.readable_publish_date }} </time>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -275,9 +322,17 @@ export default defineComponent({
     const showMoreDropdown = () => {
       showdropdown.value = !showdropdown.value;
     };
+    const allArticles = computed(() => store.getters.allArticles);
+    const allPostsExceptSelected = computed(() =>
+      allArticles.value
+        .filter((article: any) => article.slug !== selectedArticle.value.slug)
+        .sort(() => Math.random() - Math.random())
+        .slice(0, 4)
+    );
     return {
       selectedArticle,
       selectedArticleComments,
+      allPostsExceptSelected,
       showMoreDropdown,
       showdropdown,
       content,
@@ -287,7 +342,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style lang="scss" scoped>
 .body_html p {
   margin-bottom: 20px !important;
 }
@@ -302,5 +357,22 @@ export default defineComponent({
 .body_html .highlight__panel {
   position: absolute;
   top: 0;
+}
+.comment-sort-option {
+  margin-top: 10px;
+  padding: 4px 0;
+  :hover {
+    background: #ebecfc;
+    border-radius: 10px;
+  }
+  h4 {
+    color: #242424;
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
+.crayons-field__description {
+  color: #525252;
+  font-size: 14px;
 }
 </style>

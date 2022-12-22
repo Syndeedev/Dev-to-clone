@@ -118,8 +118,10 @@
               ></path>
             </svg>
           </span> -->
-          <span class="crayons-reaction__count" id="reaction-number-readinglist"
-            >4</span
+          <span
+            class="crayons-reaction__count"
+            id="reaction-number-readinglist"
+            >{{ selectedArticle.public_reactions_count }}</span
           >
 
           <!-- <span data-testid="tooltip" class="crayons-tooltip__content">
@@ -137,7 +139,7 @@
             aria-controls="article-show-more-dropdown"
             aria-expanded="false"
             aria-haspopup="true"
-            class="dropbtn crayons-btn crayons-btn--ghost-dimmed crayons-btn--icon-rounded"
+            class="dropbtn p-2 crayons-btn crayons-btn--ghost-dimmed crayons-btn--icon-rounded hover:bg-gray-300 hover:rounded-full hover:p-2"
             aria-label="Share post options"
             data-initialized="true"
             @click="showMoreDropdown"
@@ -163,7 +165,7 @@
           <div
             v-if="showdropdown"
             id="article-show-more-dropdown w-full"
-            class="crayons-dropdown w-64 bg-white p-6 side-bar absolute border border-gray-300 rounded-lg"
+            class="crayons-dropdown w-64 bg-white p-6 side-bar absolute border border-gray-300 rounded-lg top-[-10px] left-14"
           >
             <div>
               <button
@@ -208,7 +210,7 @@
                 target="_blank"
                 class="crayons-link crayons-link--block"
                 rel="noopener"
-                href="https://twitter.com/intent/tweet?text=%22Code%20brushes%20for%20GitHub%20Copilot%22%20by%20%40codepo8%20%23DEVCommunity%20https%3A%2F%2Fdev.to%2Fcodepo8%2Fcode-brushes-for-github-copilot-4hij"
+                href="#"
               >
                 Share to Twitter
               </a>
@@ -216,7 +218,7 @@
                 target="_blank"
                 class="crayons-link crayons-link--block"
                 rel="noopener"
-                href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fdev.to%2Fcodepo8%2Fcode-brushes-for-github-copilot-4hij&amp;title=Code%20brushes%20for%20GitHub%20Copilot&amp;summary=Github%20Next%20now%20showed%20a%20new%20feature%20in%20GitHub%20Copilot%20labs%20that%20allows%20you%20to%20change%20code%20you%20write%20to%20make%20it%20cleaner%20and%20safer%20&amp;source=DEV%20Community%20%F0%9F%91%A9%E2%80%8D%F0%9F%92%BB%F0%9F%91%A8%E2%80%8D%F0%9F%92%BB"
+                href="#"
               >
                 Share to LinkedIn
               </a>
@@ -224,7 +226,7 @@
                 target="_blank"
                 class="crayons-link crayons-link--block"
                 rel="noopener"
-                href="https://www.reddit.com/submit?url=https%3A%2F%2Fdev.to%2Fcodepo8%2Fcode-brushes-for-github-copilot-4hij&amp;title=Code%20brushes%20for%20GitHub%20Copilot"
+                href="#"
               >
                 Share to Reddit
               </a>
@@ -232,7 +234,7 @@
                 target="_blank"
                 class="crayons-link crayons-link--block"
                 rel="noopener"
-                href="https://news.ycombinator.com/submitlink?u=https%3A%2F%2Fdev.to%2Fcodepo8%2Fcode-brushes-for-github-copilot-4hij&amp;t=Code%20brushes%20for%20GitHub%20Copilot"
+                href="#"
               >
                 Share to Hacker News
               </a>
@@ -240,7 +242,7 @@
                 target="_blank"
                 class="crayons-link crayons-link--block"
                 rel="noopener"
-                href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fdev.to%2Fcodepo8%2Fcode-brushes-for-github-copilot-4hij"
+                href="#"
               >
                 Share to Facebook
               </a>
@@ -248,7 +250,7 @@
                 target="_blank"
                 class="crayons-link crayons-link--block"
                 rel="noopener"
-                href="https://toot.kytta.dev/?text=https%3A%2F%2Fdev.to%2Fcodepo8%2Fcode-brushes-for-github-copilot-4hij"
+                href="#"
               >
                 Share to Mastodon
               </a>
@@ -286,6 +288,7 @@
 import { defineComponent, ref } from "vue";
 import { computed } from "vue";
 import { useStore } from "vuex";
+import useClipboard from "vue-clipboard3";
 
 export default defineComponent({
   setup() {
@@ -296,9 +299,20 @@ export default defineComponent({
     const showMoreDropdown = () => {
       showdropdown.value = !showdropdown.value;
     };
-    const copyUrl = () => {
-      copy.value = !copy.value;
+
+    const { toClipboard } = useClipboard();
+
+    const copyUrl = async () => {
+      try {
+        const url = window.location.href;
+        await toClipboard(url);
+        copy.value = true;
+      } catch (e) {
+        copy.value = false;
+        console.error(e);
+      }
     };
+
     return {
       copy,
       copyUrl,

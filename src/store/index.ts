@@ -8,12 +8,14 @@ export default createStore({
     selectedArticle: {},
     authorDetails: {},
     selectedArticleComments: [],
+    authorArticles: [],
   },
   getters: {
     allArticles: (state) => state.allArticles,
     selectedArticle: (state) => state.selectedArticle,
     authorDetails: (state) => state.authorDetails,
     selectedArticleComments: (state) => state.selectedArticleComments,
+    authorArticles: (state) => state.authorArticles,
   },
   mutations: {
     allArticles: (state, data) => {
@@ -34,6 +36,11 @@ export default createStore({
     },
     selectedArticleComments: (state, data) => {
       state.selectedArticleComments = data;
+    },
+    allAuthorArticles: (state, data) => {
+      state.authorArticles = data
+        .sort(() => Math.random() - Math.random())
+        .slice(0, 3);
     },
   },
   actions: {
@@ -86,9 +93,23 @@ export default createStore({
         console.log(selectedArticleComments.data);
         return response.data;
       } catch (e) {
+        window.location.href = "/";
         return false;
       }
     },
+    async getAllAuthorArticles({ commit }, username) {
+      try {
+        const response = await axios.get(
+          `${apiUrl}articles?username=${username}`
+        );
+        console.log(response.data);
+        commit("allAuthorArticles", response.data);
+        return response;
+      } catch (e) {
+        // return false;
+      }
+    },
   },
+
   modules: {},
 });
