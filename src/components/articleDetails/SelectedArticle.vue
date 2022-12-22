@@ -253,49 +253,51 @@
     </div>
   </div>
   <!-- READ NEXT -->
-  <card-loader
-    class="mt-10"
-    v-if="!Object.keys(allPostsExceptSelected).length"
-  />
-  <div v-else class="bg-white border border-gray-300 mb-2 pb-8 rounded-lg">
-    <div class="mb-3 px-16 pt-8">
-      <h4 class="font-semibold text-2xl">Read next</h4>
+  <div v-if="Object.keys(selectedArticle).length">
+    <card-loader
+      class="mt-10"
+      v-if="!Object.keys(allPostsExceptSelected).length"
+    />
+    <div v-else class="bg-white border border-gray-300 mb-2 pb-8 rounded-lg">
+      <div class="mb-3 px-16 pt-8">
+        <h4 class="font-semibold text-2xl">Read next</h4>
 
-      <div
-        class="pt-6 group"
-        v-for="item in allPostsExceptSelected"
-        :key="item.id"
-      >
-        <a :href="`/${item.user?.username}/${item.slug}`">
-          <div class="article__top">
-            <div class="flex items-center">
-              <div class="article__author-pic">
-                <img
-                  :src="item.user?.profile_image"
-                  alt="author pic "
-                  class="rounded-full w-16 h-16 mr-2 border border-gray-400"
-                  loading="lazy"
-                />
-              </div>
-              <div class="flex flex-col ml-2">
-                <span class="text-xl font-semibold group-hover:text-blue-700">
-                  {{ item.title }}
-                </span>
-                <div
-                  class="text-base pt-1 text-gray-500 group-hover:text-blue-700"
-                >
-                  <span>
-                    {{ item.user?.name }}
+        <div
+          class="pt-6 group"
+          v-for="item in allPostsExceptSelected"
+          :key="item.id"
+        >
+          <a :href="`/${item.user?.username}/${item.slug}`">
+            <div class="article__top">
+              <div class="flex items-center">
+                <div class="article__author-pic">
+                  <img
+                    :src="item.user?.profile_image"
+                    alt="author pic "
+                    class="rounded-full w-16 h-16 mr-2 border border-gray-400"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="flex flex-col ml-2">
+                  <span class="text-xl font-semibold group-hover:text-blue-700">
+                    {{ item.title }}
                   </span>
-                  <span class="group-hover:text-blue-700">
-                    -
-                    <time>{{ item.readable_publish_date }} </time>
-                  </span>
+                  <div
+                    class="text-base pt-1 text-gray-500 group-hover:text-blue-700"
+                  >
+                    <span>
+                      {{ item.user?.name }}
+                    </span>
+                    <span class="group-hover:text-blue-700">
+                      -
+                      <time>{{ item.readable_publish_date }} </time>
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </a>
+          </a>
+        </div>
       </div>
     </div>
   </div>
