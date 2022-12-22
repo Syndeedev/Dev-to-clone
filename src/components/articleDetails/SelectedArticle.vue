@@ -1,5 +1,6 @@
 <template>
-  <div class="bg-white border border-gray-300 mb-2 rounded-lg">
+  <card-loader v-if="!Object.keys(selectedArticle).length" />
+  <div v-else class="bg-white border border-gray-300 mb-2 rounded-lg">
     <div>
       <img
         v-if="selectedArticle.cover_image"
@@ -252,9 +253,14 @@
     </div>
   </div>
   <!-- READ NEXT -->
-  <div class="bg-white border border-gray-300 mb-2 pb-8 rounded-lg">
+  <card-loader
+    class="mt-10"
+    v-if="!Object.keys(allPostsExceptSelected).length"
+  />
+  <div v-else class="bg-white border border-gray-300 mb-2 pb-8 rounded-lg">
     <div class="mb-3 px-16 pt-8">
       <h4 class="font-semibold text-2xl">Read next</h4>
+
       <div
         class="pt-6 group"
         v-for="item in allPostsExceptSelected"
@@ -304,9 +310,11 @@ import moment from "moment";
 // import OnboardingTaskCard from "./OnboardingTaskCard.vue";
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
+import CardLoader from "./cardLoader.vue";
 export default defineComponent({
   components: {
     QuillEditor,
+    CardLoader,
   },
   setup() {
     const store = useStore();
