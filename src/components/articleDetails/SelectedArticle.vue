@@ -186,13 +186,47 @@
       <div v-for="(comment, index) in selectedArticleComments" :key="index">
         <div>
           <div class="flex">
-            <a :href="`/${comment.user?.username}`"
-              ><img
-                :src="comment.user?.profile_image"
-                alt="author pic "
-                class="rounded-full w-10 h-10 mr-2 border border-gray-400"
-                loading="lazy"
-            /></a>
+            <div class="flex flex-col items-center mr-2">
+              <a :href="`/${comment.user?.username}`"
+                ><img
+                  :src="comment.user?.profile_image"
+                  alt="author pic "
+                  class="rounded-full w-10 h-10 border border-gray-400"
+                  loading="lazy"
+              /></a>
+
+              <span class="mt-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  role="img"
+                  aria-labelledby="ainaxwlurru35ymka7gs0shorb8d1nrp"
+                  class="crayons-icon expanded"
+                >
+                  <title id="ainaxwlurru35ymka7gs0shorb8d1nrp">Collapse</title>
+                  <path
+                    d="M12 10.677L8 6.935 9 6l3 2.807L15 6l1 .935-4 3.742zm0 4.517L9 18l-1-.935 4-3.742 4 3.742-1 .934-3-2.805z"
+                  ></path>
+                </svg>
+
+                <!-- <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  role="img"
+                  aria-labelledby="am2zpky3u4y88j48qjm8qu110gtojy7r"
+                  class="crayons-icon collapsed"
+                >
+                  <title id="am2zpky3u4y88j48qjm8qu110gtojy7r">Expand</title>
+                  <path
+                    d="M12 18l-4-3.771 1-.943 3 2.829 3-2.829 1 .943L12 18zm0-10.115l-3 2.829-1-.943L12 6l4 3.771-1 .942-3-2.828z"
+                  ></path>
+                </svg> -->
+              </span>
+            </div>
             <div
               class="bg-white border border-gray-300 mb-6 p-3 rounded-lg w-full"
             >
@@ -214,13 +248,48 @@
           <div v-if="comment.children.length">
             <div v-for="(subComment, index) in comment.children" :key="index">
               <div class="flex ml-7">
-                <a :href="`/${subComment.user?.username}`"
-                  ><img
-                    :src="subComment.user?.profile_image"
-                    alt="author pic "
-                    class="rounded-full w-10 h-10 mr-2 border border-gray-400"
-                    loading="lazy"
-                /></a>
+                <div class="mr-2 flex flex-col items-center">
+                  <a :href="`/${subComment.user?.username}`"
+                    ><img
+                      :src="subComment.user?.profile_image"
+                      alt="author pic "
+                      class="rounded-full w-10 h-10 border border-gray-400"
+                      loading="lazy"
+                  /></a>
+                  <span class="mt-1">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      role="img"
+                      aria-labelledby="ainaxwlurru35ymka7gs0shorb8d1nrp"
+                      class="crayons-icon expanded"
+                    >
+                      <title id="ainaxwlurru35ymka7gs0shorb8d1nrp">
+                        Collapse
+                      </title>
+                      <path
+                        d="M12 10.677L8 6.935 9 6l3 2.807L15 6l1 .935-4 3.742zm0 4.517L9 18l-1-.935 4-3.742 4 3.742-1 .934-3-2.805z"
+                      ></path>
+                    </svg>
+
+                    <!-- <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  role="img"
+                  aria-labelledby="am2zpky3u4y88j48qjm8qu110gtojy7r"
+                  class="crayons-icon collapsed"
+                >
+                  <title id="am2zpky3u4y88j48qjm8qu110gtojy7r">Expand</title>
+                  <path
+                    d="M12 18l-4-3.771 1-.943 3 2.829 3-2.829 1 .943L12 18zm0-10.115l-3 2.829-1-.943L12 6l4 3.771-1 .942-3-2.828z"
+                  ></path>
+                </svg> -->
+                  </span>
+                </div>
                 <div
                   class="bg-white border border-gray-300 mb-6 p-3 rounded-lg w-full"
                 >
