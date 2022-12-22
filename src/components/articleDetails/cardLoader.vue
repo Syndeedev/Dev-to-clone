@@ -6,7 +6,6 @@
 
 <style lang="scss" scoped>
 .wrapper {
-  width: 320px;
   margin: 0 auto;
 }
 .card-loader {

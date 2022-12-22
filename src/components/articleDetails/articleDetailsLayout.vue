@@ -32,7 +32,6 @@ export default defineComponent({
     const route = useRoute();
     const username = route.params.username;
     const slug = route.params.slug;
-    console.log(username);
 
     const getArticleById = () => {
       store.dispatch("getArticleById", { username, slug });

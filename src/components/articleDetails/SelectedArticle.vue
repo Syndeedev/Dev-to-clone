@@ -323,12 +323,20 @@ export default defineComponent({
       showdropdown.value = !showdropdown.value;
     };
     const allArticles = computed(() => store.getters.allArticles);
-    const allPostsExceptSelected = computed(() =>
-      allArticles.value
+    const page = ref(0);
+    const getAllArticles = () => {
+      store.dispatch("getAllArticles", ++page.value);
+    };
+    const allPostsExceptSelected = computed(() => {
+      if (allArticles.value.length == 0) {
+        getAllArticles();
+      }
+
+      return allArticles.value
         .filter((article: any) => article.slug !== selectedArticle.value.slug)
         .sort(() => Math.random() - Math.random())
-        .slice(0, 4)
-    );
+        .slice(0, 4);
+    });
     return {
       selectedArticle,
       selectedArticleComments,
