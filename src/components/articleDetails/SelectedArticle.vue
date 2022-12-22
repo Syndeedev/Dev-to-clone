@@ -246,9 +246,9 @@
         </div>
       </div>
       <div class="text-sm text-[#717171] text-center py-4">
-        <span>Code of Conduct </span>
+        <a href="/code-of-conduct">Code of Conduct </a>
         <span class="mx-2">•</span>
-        <span> Report abuse </span>
+        <a href="/report-abuse"> Report abuse </a>
       </div>
     </div>
   </div>
