@@ -139,6 +139,7 @@
               class="outline-none w-full"
               autocomplete="off"
               aria-label="Search term"
+              v-model="token"
             />
           </div>
         </div>
@@ -150,6 +151,7 @@
             name="button"
             type="submit"
             class="bg-blue-700 flex items-center w-full rounded-lg p-3 text-white justify-center"
+            @click="login"
           >
             Continue
           </button>
@@ -167,12 +169,24 @@
 
 <script lang="ts">
 import DevtoFooter from "@/components/DevtoFooter.vue";
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
+import { useStore } from "vuex";
 
 export default defineComponent({
   components: { DevtoFooter },
   setup() {
-    return {};
+    const store = useStore();
+    const token = ref("");
+
+    const login = () => {
+      const res = store.dispatch("authenticateUser");
+      console.log(token.value, res);
+    };
+    login();
+    return {
+      token,
+      login,
+    };
   },
 });
 </script>

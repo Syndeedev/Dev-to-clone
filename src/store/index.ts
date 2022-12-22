@@ -88,9 +88,18 @@ export default createStore({
           `${apiUrl}comments?a_id=${response.data.id}`
         );
         commit("authorDetails", authorDetails.data);
+        selectedArticleComments.data = selectedArticleComments.data.map(
+          (article: any) => {
+            return {
+              ...article,
+              visible: true,
+            };
+          }
+        );
+
         commit("selectedArticleComments", selectedArticleComments.data);
-        console.log(authorDetails.data);
-        console.log(selectedArticleComments.data);
+
+        console.log(selectedArticleComments.data, "selectedArticleComments");
         return response.data;
       } catch (e) {
         window.location.href = "/";
@@ -107,6 +116,19 @@ export default createStore({
         return response;
       } catch (e) {
         // return false;
+      }
+    },
+    async authenticateUser({ commit }) {
+      try {
+        const response = await axios.get(`${apiUrl}users/me`, {
+          headers: {
+            api_key: "9urMozwCWWiAZN7mtqwP8zsS",
+          },
+        });
+        // commit("allAuthorArticles", response.data);
+        return response;
+      } catch (e: any) {
+        return e.response.status;
       }
     },
   },
