@@ -171,18 +171,22 @@
 import DevtoFooter from "@/components/DevtoFooter.vue";
 import { defineComponent, ref } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   components: { DevtoFooter },
   setup() {
     const store = useStore();
+    const router = useRouter();
     const token = ref("");
 
     const login = () => {
-      const res = store.dispatch("authenticateUser", token.value);
-      console.log(token.value, res);
+      store.dispatch("authenticateUser", token.value).then((res) => {
+        if (res.status) {
+          router.push("/");
+        }
+      });
     };
-    login();
     return {
       token,
       login,

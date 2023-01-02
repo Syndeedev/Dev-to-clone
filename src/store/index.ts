@@ -2,6 +2,7 @@ import axios from "axios";
 import { createStore } from "vuex";
 
 const apiUrl = process.env.API_URL || "https://dev.to/api/";
+const loginStatus = localStorage.getItem("userData") ? true : false;
 export default createStore({
   state: {
     allArticles: [],
@@ -9,6 +10,7 @@ export default createStore({
     authorDetails: {},
     selectedArticleComments: [],
     authorArticles: [],
+    authenticatedUser: loginStatus,
   },
   getters: {
     allArticles: (state) => state.allArticles,
@@ -16,6 +18,7 @@ export default createStore({
     authorDetails: (state) => state.authorDetails,
     selectedArticleComments: (state) => state.selectedArticleComments,
     authorArticles: (state) => state.authorArticles,
+    authenticatedUser: (state) => state.authenticatedUser,
   },
   mutations: {
     allArticles: (state, data) => {
@@ -120,20 +123,16 @@ export default createStore({
     },
     async authenticateUser({ commit }, token) {
       try {
-        const response = await axios.get(`${apiUrl}users/me`, {
-          headers: {
-            api_key: token,
-          },
-        });
-        console.log(token);
-        console.log(response);
-
-        localStorage.setItem("userData", response.data);
-        // commit("allAuthorArticles", response.data);
-        return response;
+        // const response = await axios.get(`${apiUrl}users/me`, {
+        //   headers: {
+        //     api_key: token,
+        //   },
+        // });
+        // localStorage.setItem("userData", response.data);
+        localStorage.setItem("authenticatedUser", token);
+        return { status: true };
       } catch (e: any) {
         console.log(e);
-        // return e.response.status;
       }
     },
   },

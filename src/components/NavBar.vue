@@ -34,7 +34,10 @@
           </button>
         </div>
       </div>
-      <div class="flex items-center justify-center">
+      <div
+        v-if="userAuthenticationStatus"
+        class="flex items-center justify-center"
+      >
         <a
           href="#"
           class="border ml-2 py-2 px-4 rounded-md border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white hover:underline"
@@ -48,17 +51,35 @@
         />
         <img class="mx-1 text-blue-700" src="@/assets/user_image.svg" alt="" />
       </div>
+      <div v-else class="flex items-center justify-center">
+        <a
+          href="login"
+          class="py-2 rounded mx-2 cursor-pointer text-gray-800 hover:bg-[#E7E3F4] hover:text-blue-700 hover:underline px-4"
+        >
+          Log in</a
+        >
+        <a
+          href="login"
+          class="border ml-2 py-2 px-4 rounded-md border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white hover:underline"
+        >
+          Create account
+        </a>
+      </div>
     </nav>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-
+import { defineComponent, computed } from "vue";
+import { useStore } from "vuex";
 export default defineComponent({
-  // setup() {
-  //   return {};
-  // },
+  setup() {
+    const store = useStore();
+    const userAuthenticationStatus = computed(
+      () => store.getters.authenticatedUser
+    );
+    return { userAuthenticationStatus };
+  },
 });
 </script>
 
