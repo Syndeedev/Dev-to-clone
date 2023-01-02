@@ -174,7 +174,9 @@
           </div>
         </div>
 
-        <button class="px-4 py-2 border-2">Subscribe</button>
+        <button @click="openModal" class="px-4 py-2 border-2">
+          {{ subscribeButtonText }}
+        </button>
       </div>
       <div>
         <QuillEditor theme="snow" placeholder="Add to the discussion" />
@@ -360,6 +362,45 @@
       </div>
     </div>
   </div>
+  <dev-to-modal :modalActive="modalActive">
+    <div class="modal-body p-9">
+      <div class="authentication-modal__container flex flex-col gap-4">
+        <figure class="authentication-modal__image-container">
+          <img
+            class="authentication-modal__image w-20 h-20 rounded origin-bottom -rotate-[10deg]"
+            src="https://res.cloudinary.com/practicaldev/image/fetch/s--pcSkTMZL--/c_limit,f_auto,fl_progressive,q_80,w_190/https://practicaldev-herokuapp-com.freetls.fastly.net/assets/devlogo-pwa-512.png"
+            alt="DEV Community 👩‍💻👨‍💻"
+            loading="lazy"
+          />
+        </figure>
+        <div class="authentication-modal__content">
+          <p class="authentication-modal__description">
+            We're a place where coders share, stay up-to-date and grow their
+            careers.
+          </p>
+        </div>
+        <div
+          class="authentication-modal__actions flex flex-col items-center justify-center px-12 pb-4 gap-1"
+        >
+          <a
+            href="/login"
+            aria-label="Log in"
+            class="bg-blue-700 w-full text-center text-white rounded-lg py-2"
+          >
+            Log in
+          </a>
+          <a
+            href="/login"
+            aria-label="Create new account"
+            class="bg-white w-full text-center text-blue-700 rounded-lg py-2 hover:bg-gray-50 hover:w-full"
+          >
+            Create account
+          </a>
+        </div>
+      </div>
+    </div>
+  </dev-to-modal>
+
   <!-- READ NEXT -->
   <div v-if="Object.keys(selectedArticle).length">
     <card-loader
@@ -421,14 +462,17 @@ import moment from "moment";
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import CardLoader from "./cardLoader.vue";
+import DevToModal from "../DevToModal.vue";
 export default defineComponent({
   components: {
     QuillEditor,
     CardLoader,
+    DevToModal,
   },
   setup() {
     const store = useStore();
     const content = ref("");
+    const subscribeButtonText = ref("Subcribe");
     const selectedArticle = computed(() => store.getters.selectedArticle);
     const selectedArticleComments = computed(
       () => store.getters.selectedArticleComments
@@ -455,13 +499,33 @@ export default defineComponent({
         .sort(() => Math.random() - Math.random())
         .slice(0, 4);
     });
+
+    const modalActive = ref(false);
+    const toggleModal = () => {
+      modalActive.value = !modalActive.value;
+    };
+    const userAuthenticationStatus = computed(
+      () => store.getters.authenticatedUser
+    );
+    const openModal = () => {
+      if (userAuthenticationStatus.value) {
+        subscribeButtonText.value = "Subscribed";
+      } else {
+        modalActive.value = true;
+      }
+    };
+
     return {
+      modalActive,
+      toggleModal,
+      openModal,
       selectedArticle,
       selectedArticleComments,
       allPostsExceptSelected,
       showMoreDropdown,
       showdropdown,
       content,
+      subscribeButtonText,
       date,
     };
   },
