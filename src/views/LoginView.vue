@@ -179,7 +179,7 @@ export default defineComponent({
     const token = ref("");
 
     const login = () => {
-      const res = store.dispatch("authenticateUser");
+      const res = store.dispatch("authenticateUser", token.value);
       console.log(token.value, res);
     };
     login();

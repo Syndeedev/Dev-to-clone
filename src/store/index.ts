@@ -118,17 +118,22 @@ export default createStore({
         // return false;
       }
     },
-    async authenticateUser({ commit }) {
+    async authenticateUser({ commit }, token) {
       try {
         const response = await axios.get(`${apiUrl}users/me`, {
           headers: {
-            api_key: "9urMozwCWWiAZN7mtqwP8zsS",
+            api_key: token,
           },
         });
+        console.log(token);
+        console.log(response);
+
+        localStorage.setItem("userData", response.data);
         // commit("allAuthorArticles", response.data);
         return response;
       } catch (e: any) {
-        return e.response.status;
+        console.log(e);
+        // return e.response.status;
       }
     },
   },
