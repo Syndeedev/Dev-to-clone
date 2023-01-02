@@ -45,6 +45,9 @@ export default createStore({
         .sort(() => Math.random() - Math.random())
         .slice(0, 3);
     },
+    authenticatedUser: (state, data) => {
+      state.authenticatedUser = data;
+    },
   },
   actions: {
     async getAllArticles({ commit, dispatch }, { page = 1, per_page = 10 }) {
@@ -129,7 +132,8 @@ export default createStore({
         //   },
         // });
         // localStorage.setItem("userData", response.data);
-        localStorage.setItem("authenticatedUser", token);
+        localStorage.setItem("userData", token);
+        commit("authenticatedUser", true);
         return { status: true };
       } catch (e: any) {
         console.log(e);
