@@ -11,6 +11,7 @@ export default createStore({
     selectedArticleComments: [],
     authorArticles: [],
     authenticatedUser: loginStatus,
+    showLoginError: false,
   },
   getters: {
     allArticles: (state) => state.allArticles,
@@ -19,6 +20,7 @@ export default createStore({
     selectedArticleComments: (state) => state.selectedArticleComments,
     authorArticles: (state) => state.authorArticles,
     authenticatedUser: (state) => state.authenticatedUser,
+    showLoginError: (state) => state.showLoginError,
   },
   mutations: {
     allArticles: (state, data) => {
@@ -47,6 +49,9 @@ export default createStore({
     },
     authenticatedUser: (state, data) => {
       state.authenticatedUser = data;
+    },
+    showLoginError: (state, data) => {
+      state.showLoginError = data;
     },
   },
   actions: {
@@ -124,19 +129,20 @@ export default createStore({
         // return false;
       }
     },
-    async authenticateUser({ commit }, token) {
+    async authenticateUser({ commit, state }, token) {
       try {
-        // const response = await axios.get(`${apiUrl}users/me`, {
-        //   headers: {
-        //     api_key: token,
-        //   },
-        // });
+        const response = await axios.get(`${apiUrl}users/me`, {
+          headers: {
+            api_key: token,
+          },
+        });
         // localStorage.setItem("userData", response.data);
-        localStorage.setItem("userData", token);
+        // localStorage.setItem("userData", token);
         commit("authenticatedUser", true);
-        return { status: true };
+        // return { status: true };
+        return response;
       } catch (e: any) {
-        console.log(e);
+        commit("showLoginError", true);
       }
     },
   },

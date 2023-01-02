@@ -1,6 +1,21 @@
 <template>
   <div>
-    <div class="pt-20 flex justify-center">
+    <div v-if="showErrorBox" class="pt-20 flex justify-center items-center">
+      <div
+        class="registration__error-notice max-w-[596px] text-[#b91c1c] text-sm bg-[#F4E1E0] mb-2 p-2"
+      >
+        <strong> Unable to login. </strong>
+        <br />
+        If you haven't created an account, we recommend signing up with social
+        authentication below. If you haven't received your confirmation email
+        yet, <a href="/confirm-email" class="text-blue-700">click here</a> to
+        resend it.
+        <br />
+        <a href="/contact" class="text-blue-700">Contact us</a> if you continue
+        having trouble.
+      </div>
+    </div>
+    <div :class="{ 'pt-4': showErrorBox }" class="pt-20 flex justify-center">
       <div class="bg-white border border-gray-300 mb-2 rounded-lg p-12">
         <div class="registration__content text-center mb-6">
           <h1 class="text-gray-900 text-3xl font-bold">
@@ -169,7 +184,7 @@
 
 <script lang="ts">
 import DevtoFooter from "@/components/DevtoFooter.vue";
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, computed } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 
@@ -179,6 +194,7 @@ export default defineComponent({
     const store = useStore();
     const router = useRouter();
     const token = ref("");
+    const showErrorBox = computed(() => store.getters.showLoginError);
 
     const login = () => {
       store.dispatch("authenticateUser", token.value).then((res) => {
@@ -190,6 +206,7 @@ export default defineComponent({
     return {
       token,
       login,
+      showErrorBox,
     };
   },
 });
