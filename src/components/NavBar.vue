@@ -49,7 +49,22 @@
           src="@/assets/notification.svg"
           alt="notification icon"
         />
-        <img class="mx-1 text-blue-700" src="@/assets/user_image.svg" alt="" />
+        <div class="group relative">
+          <img
+            class="mx-1 text-blue-700"
+            src="@/assets/user_image.svg"
+            alt=""
+          />
+          <div class="pt-2 md:absolute hidden !right-[-10px] group-hover:block">
+            <ul class="md:bg-white shadow rounded-xl py-2 w-32">
+              <li
+                class="block cursor-pointer px-4 py-2 text-sm border-l border-gray-100 md:border-0 text-[#959EAF] hover:bg-gray-200 hover:rounded"
+              >
+                <button @click="logOut" type="button">Log Out</button>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
       <div v-else class="flex items-center justify-center">
         <a
@@ -78,7 +93,11 @@ export default defineComponent({
     const userAuthenticationStatus = computed(
       () => store.getters.authenticatedUser
     );
-    return { userAuthenticationStatus };
+    const logOut = () => {
+      localStorage.removeItem("userData");
+      window.location.href = "/";
+    };
+    return { userAuthenticationStatus, logOut };
   },
 });
 </script>
